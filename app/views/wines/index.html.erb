@@ -1,0 +1,36 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Vinos</h1>
+
+<table class="table">
+  <thead class="thead-dark">
+    <tr>
+      <th>Nombre</th>
+      <th>Cepas</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @wines.each do |wine| %>
+      <tr>
+        <td><%= wine.name %></td>
+        <td>
+          <ul>
+            <% wine.strains.order(:name).each do |s| %>
+              <li><%= "#{s.name} (#{wine.getPercentByStrainId(s.id)}%)" %></li>
+            <% end %>
+          </ul>
+        </td>
+        <td><%= link_to 'Mostrar', wine %></td>
+        <td><%= link_to 'Editar', edit_wine_path(wine) %></td>
+        <td><%= link_to 'Eliminar', wine, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'Nuevo Vino', new_wine_path %>
+<%= link_to 'Nueva Cepa', new_strain_path %>
